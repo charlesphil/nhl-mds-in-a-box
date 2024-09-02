@@ -1,6 +1,6 @@
 [tool.poetry]
 package-mode = false
-description = ""
+description = "A project that uses the NHL API to create a modern data stack in a box."
 authors = ["Charlie Phil <71610407+charlesphil@users.noreply.github.com>"]
 readme = "README.md"
 
