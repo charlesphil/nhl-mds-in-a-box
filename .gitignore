@@ -1,0 +1,16 @@
+# python
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+
+# duckdb
+duckdb/*.duckdb
+duckdb/*.wal
+
+# dbt
+transform/target/
+transform/dbt_packages/
+transform/logs/
+
+# dlt
+extract/.dlt/secrets.toml
