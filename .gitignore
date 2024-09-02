@@ -4,8 +4,8 @@
 **/*$py.class
 
 # duckdb
-duckdb/*.duckdb
-duckdb/*.wal
+data/*.duckdb
+data/*.wal
 
 # dbt
 transform/target/
