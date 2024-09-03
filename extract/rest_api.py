@@ -95,9 +95,9 @@ def github_source(github_token: str = dlt.secrets.value) -> Any:
 
 def load_github() -> None:
     pipeline = dlt.pipeline(
-        pipeline_name="rest_api_github",
-        destination='duckdb',
-        dataset_name="rest_api_data",
+        pipeline_name="github_rest_api",
+        destination=dlt.destinations.duckdb("../data/sources.duckdb"),
+        dataset_name="github",
     )
 
     load_info = pipeline.run(github_source())
@@ -106,9 +106,9 @@ def load_github() -> None:
 
 def load_pokemon() -> None:
     pipeline = dlt.pipeline(
-        pipeline_name="rest_api_pokemon",
-        destination='duckdb',
-        dataset_name="rest_api_data",
+        pipeline_name="pokemon_rest_api",
+        destination=dlt.destinations.duckdb("../data/sources.duckdb"),
+        dataset_name="pokemon",
     )
 
     pokemon_source = rest_api_source(
