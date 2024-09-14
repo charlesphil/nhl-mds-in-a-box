@@ -1,6 +1,7 @@
 from typing import Any
 
 import dlt
+import duckdb
 from rest_api import (
     RESTAPIConfig,
     check_connection,
@@ -102,6 +103,14 @@ def load_github() -> None:
 
     load_info = pipeline.run(github_source())
     print(load_info)
+
+
+def load_nhl_players() -> None:
+    pipeline = dlt.pipeline(
+        pipeline_name=""
+        destination=dlt.destinations.duckdb("../data/sources.duckdb")
+        dataset_name="nhl_api"
+    )
 
 
 def load_pokemon() -> None:
