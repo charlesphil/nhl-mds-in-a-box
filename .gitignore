@@ -2,6 +2,7 @@
 **/__pycache__/
 **/*.py[cod]
 **/*$py.class
+.venv/
 
 # duckdb
 data/*.duckdb
@@ -11,6 +12,3 @@ data/*.wal
 transform/target/
 transform/dbt_packages/
 transform/logs/
-
-# dlt
-extract/.dlt/secrets.toml

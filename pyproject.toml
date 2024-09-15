@@ -1,6 +1,6 @@
 [tool.poetry]
 package-mode = false
-description = "A project that uses the NHL API to create a modern data stack in a box."
+description = "A project that uses the ESPN and NHL APIs to create a modern data stack in a box."
 authors = ["Charlie Phil <71610407+charlesphil@users.noreply.github.com>"]
 readme = "README.md"
 
@@ -8,7 +8,7 @@ readme = "README.md"
 python = ">=3.10, <3.13"
 dbt-core = "^1.8.6"
 dbt-duckdb = "^1.8.3"
-dlt = "^0.5.4"
+duckdb = "^1.1.0"
 numpy = "^2.1.0"
 streamlit = "^1.38.0"
 apache-airflow = "^2.10.0"
