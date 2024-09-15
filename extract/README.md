@@ -1,1 +1,1 @@
-# Extract - dlt Project
+# Extract
