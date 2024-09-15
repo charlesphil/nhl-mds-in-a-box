@@ -22,27 +22,37 @@ def main() -> None:
     own sources.
 
     """
+    # duckdb housekeeping
+    con = duckdb.connect("../data/sources.duckdb")
+    con.execute("create schema if not exists nhl_api")
+    logger.info("Initialized duckdb connection.")
+
     session = requests.Session()
     logger.info("Initialized session.")
-    teams_df = extract_teams(session)
-    load_teams(teams_df)
+
+    # endpoints
+    teams(session, con)
+
+    con.close()
+
+    logger.info("Extraction and loading completed!")
 
 
-def extract_teams(session: requests.sessions.Session) -> pd.DataFrame:
-    """Retrieve basic information on NHL teams.
+def teams(
+    session: requests.Session,
+    con: duckdb.DuckDBPyConnection,
+) -> None:
+    """Extract and load basic information on NHL teams.
 
     Includes all present and historical teams.
-    This function also cleans up the data for database loading.
+    Also cleans up the data for database loading.
 
     Args:
-        session (requests.session.Session): A session object.
-
-    Returns:
-        pd.DataFrame: A DataFrame containing the normalized returned response
-            data.
+        session (requests.Session): A session object.
+        con (duckdb.DuckDBPyConnection): A connection to the duckdb database.
 
     """
-    logger.info("Retrieving team data...")
+    logger.info("Retrieving teams data...")
     response = session.get("https://api.nhle.com/stats/rest/en/team")
     response.raise_for_status()
 
@@ -55,27 +65,16 @@ def extract_teams(session: requests.sessions.Session) -> pd.DataFrame:
         )
         sys.exit(1)
 
-    return (
+    logger.info("Teams data retrieved. Loading into database...")
+
+    df_to_load = (  # noqa: F841
         pd.DataFrame.from_dict(raw["data"])
-        .fillna(0)  # normalize data here, some have nulls
+        .fillna(0)  # normalize null values to 0
         .astype({"franchiseId": int})  # convert column back to original dtype
     )
 
-
-def load_teams(df: pd.DataFrame) -> None:
-    """Load the normalized team DataFrame into the database.
-
-    Args:
-        df (pd.DataFrame): DataFrame containing normalized data from source.
-
-    """
-    logger.info("Loading DataFrame into database...")
-
-    with duckdb.connect("../data/sources.duckdb") as conn:
-        conn.execute("create schema if not exists nhl_api")
-        conn.execute("use nhl_api")
-        conn.execute("create table if not exists teams as select * from df")
-        conn.execute("insert into teams select * from df")
+    con.execute("create table if not exists teams as select * from df_to_load")
+    con.execute("insert into teams select * from df_to_load")
 
 
 if __name__ == "__main__":
