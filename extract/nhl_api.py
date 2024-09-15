@@ -25,6 +25,7 @@ def main() -> None:
     # duckdb housekeeping
     con = duckdb.connect("../data/sources.duckdb")
     con.execute("create schema if not exists nhl_api")
+    con.execute("use nhl_api")
     logger.info("Initialized duckdb connection.")
 
     session = requests.Session()
@@ -34,7 +35,6 @@ def main() -> None:
     teams(session, con)
 
     con.close()
-
     logger.info("Extraction and loading completed!")
 
 
@@ -75,6 +75,8 @@ def teams(
 
     con.execute("create table if not exists teams as select * from df_to_load")
     con.execute("insert into teams select * from df_to_load")
+
+    logger.info("Teams data successfully loaded.")
 
 
 if __name__ == "__main__":
