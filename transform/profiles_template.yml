@@ -1,0 +1,17 @@
+nhl_mds_in_a_box_transform:
+  outputs:
+    dev:
+      type: duckdb
+      path: ../data/dev.duckdb
+      attach:
+        - path: ../data/sources.duckdb
+      threads: 1
+
+    prod:
+      type: duckdb
+      path: ../data/prod.duckdb
+      attach:
+        - path: ../data/sources.duckdb
+      threads: 4
+
+  target: dev
