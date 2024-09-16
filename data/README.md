@@ -24,7 +24,7 @@ Development version of the production database where business logic can be devel
 
 ### prod.duckdb
 
-Production database of tables and views intended to be exposed to end-users and applications like business intelligence (BI) tools. This repo uses [Streamlit](../streamlit/README.md) as an interactive visualization tool. This database must be explicitly targeted by dbt in order for changes to occur.
+Production database of tables and views intended to be exposed to end-users and applications like business intelligence (BI) tools through specific schemas. This repo uses [Streamlit](../streamlit/README.md) as an interactive visualization tool. This database must be explicitly targeted by dbt in order for changes to occur.
 
 ## FAQ
 

@@ -27,8 +27,11 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   nhl_mds_in_a_box_transform:
     staging:
+      schema: staging
       +materialized: view
     intermediate:
+      schema: intermediate
       +materialized: view
     marts:
+      schema: marts
       +materialized: table

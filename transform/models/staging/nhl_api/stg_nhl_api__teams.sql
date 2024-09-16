@@ -1,18 +1,17 @@
 with
 
-source as (
-    select * from {{ source('nhl_api', 'teams') }}
-),
+    source as (select * from {{ source("nhl_api", "teams") }}),
 
-renamed as (
-    select
-        id,
-        franchiseId::int as franchise_id,
-        fullName as full_name,
-        leagueId as league_id,
-        rawTricode as raw_tricode,
-        triCode as tricode
-    from source
-)
+    renamed as (
+        select
+            id,
+            franchiseid::int as franchise_id,
+            fullname as full_name,
+            leagueid as league_id,
+            rawtricode as raw_tricode,
+            tricode as tricode
+        from source
+    )
 
-select * from renamed
+select *
+from renamed
