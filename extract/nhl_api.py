@@ -67,14 +67,9 @@ def teams(
 
     logger.info("Teams data retrieved. Loading into database...")
 
-    df_to_load = (  # noqa: F841
-        pd.DataFrame.from_dict(raw["data"])
-        .fillna(0)  # normalize null values to 0
-        .astype({"franchiseId": int})  # convert column back to original dtype
-    )
+    df_to_load = pd.DataFrame.from_dict(raw["data"])  # noqa: F841
 
     con.execute("create table if not exists teams as select * from df_to_load")
-    con.execute("insert into teams select * from df_to_load")
 
     logger.info("Teams data successfully loaded.")
 

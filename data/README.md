@@ -20,24 +20,24 @@ Tables:
 
 ### dev.duckdb
 
-Development version of the production database where business logic can be developed into the appropriate tables and views. This repo uses the [transform](../transform/README.md) dbt project to create models for these tables and views.
+Development version of the production database where business logic can be developed into the appropriate tables and views. This repo uses the [transform](../transform/README.md) dbt project to create models for these tables and views. This database is the default target for `dbt run`.
 
 ### prod.duckdb
 
-Production database of tables and views intended to be exposed to end-users and applications like business intelligence (BI) tools. This repo uses [Streamlit](../streamlit/README.md) as an interactive visualization tool.
+Production database of tables and views intended to be exposed to end-users and applications like business intelligence (BI) tools. This repo uses [Streamlit](../streamlit/README.md) as an interactive visualization tool. This database must be explicitly targeted by dbt in order for changes to occur.
 
 ## FAQ
 
 ### "Why is the data not committed to the repo?"
 
-There are a number of reasons that the duckdb databases aren't committed to the repo:
+There are a number of reasons that the DuckDB databases aren't committed to the repo:
 
-- While the duckdb files may be small now, committing files that can grow to large sizes will cause issues with Github (and they *will* grow),
+- While the DuckDB files may be small now, committing files that can grow to large sizes will cause issues with Github (and they *will* grow),
 - I do not feel comfortable storing third-party data in a public repository,
-- Running the extraction scripts and transformation models are trivial.
+- Running the extraction scripts and dbt models are trivial.
 
-The only exceptions to the above reasons will be dbt `seed` models
+The only exceptions to the above reasons will be dbt `seed` models as they will be static CSV files that contain simple reference data.
 
 ### "Why create this directory at all?"
 
-Because this repo is structured as a monorepo, I wanted a central location for my data that was not buried within either the `extract` or `transform` projects so that I could access all of the data easily across all of the projects found in this repo.
+I wanted a central location for my data that was not buried within either the extract or transform projects so that I could access all of the data easily across all of the projects found in this repo. Technically, keeping each database in their respective projects provides for a good separation of concerns (for example, keeping `sources.duckdb` in the extract project would make it obvious that the database will not be touched by the dbt transform project). However, this adds a little bit of cognitive overhead and makes for an annoying time managing paths. This directory can also be thought of as a local representation of how data warehouses might present their databases.

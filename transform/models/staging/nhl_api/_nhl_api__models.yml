@@ -2,10 +2,42 @@ version: 2
 
 models:
   - name: stg_nhl_api__teams
-    description: "A starter dbt model"
+    description: This model pulls in NHL teams data from the NHL source.
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: >
+          The primary key for this table. Note that IDs 70 and 99 correspond to
+          placeholder teams 'To be determined' and 'NHL', respectively.
+        data_tests:
+          - unique
+          - not_null
+      - name: franchise_id
+        description: The ID of the franchise.
+      - name: full_name
+        description: >
+          The name of the team. Franchises can have their team names changed
+          over time so multiple teams can map to the same franchise.
+        data_tests:
+          - unique
+          - not_null
+      - name: league_id
+        description: ID for the league. Currently only has one value (133).
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: [133]
+              quote: false
+      - name: raw_tricode
+        description: >
+          Three-letter identifier that maps to a team. Not apparently different
+          from `tricode` at the moment.
+        data_tests:
+          - unique
+          - not_null
+      - name: tricode
+        description: >
+          Three-letter identifier that maps to a team. Not apparently different
+          from `raw_tricode` at the moment.
         data_tests:
           - unique
           - not_null
