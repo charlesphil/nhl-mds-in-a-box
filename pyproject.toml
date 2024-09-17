@@ -12,6 +12,7 @@ duckdb = "^1.1.0"
 numpy = "^2.1.0"
 streamlit = "^1.38.0"
 apache-airflow = "^2.10.0"
+dlt = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies]
 shandy-sqlfmt = {extras = ["jinjafmt"], version = "^0.23.2"}

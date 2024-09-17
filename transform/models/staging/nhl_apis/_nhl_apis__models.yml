@@ -41,3 +41,11 @@ models:
         data_tests:
           - unique
           - not_null
+      - name: _dlt_load_time
+        description: The time dlt loaded the data in local time (EST).
+        data_tests:
+          - not_null
+      - name: _dlt_id
+        description: The unique identifier assigned by dlt upon load.
+        data_tests:
+          - not_null

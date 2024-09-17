@@ -13,3 +13,6 @@ data/duckdb
 transform/target/
 transform/dbt_packages/
 transform/logs/
+
+# dlt
+extract/.dlt/secrets.toml

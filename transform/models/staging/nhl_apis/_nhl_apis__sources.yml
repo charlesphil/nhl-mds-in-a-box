@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: nhl_stats_api
+    database: sources
+    schema: nhl_stats_api
+    tables:
+      - name: teams
+      - name: games
+      - name: skaters
+      - name: goalies
+  # - name: nhl_web_api
+  #   database: sources
+  #   schema: nhl_web_api
+  #   tables:
+  #     - name:

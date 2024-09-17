@@ -1,8 +1,0 @@
-version: 2
-
-sources:
-  - name: nhl_api
-    database: sources
-    schema: nhl_api
-    tables:
-      - name: teams

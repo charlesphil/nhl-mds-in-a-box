@@ -1,4 +1,11 @@
-"""Extracts and loads data from NHL-owned APIs."""
+"""Extracts and loads data from NHL-owned APIs.
+
+Please note that this script was created before I used dlt in this project.
+
+dlt has since released their first stable version (1.0.0), making this script
+unnecessary.
+
+"""
 
 import logging
 import sys
