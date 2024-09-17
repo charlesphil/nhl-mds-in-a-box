@@ -1,16 +1,37 @@
 # Transform - dbt Project
 
-Welcome to your new dbt project!
+This is the [dbt core](https://docs.getdbt.com/docs/introduction) project used to transform source data into data models based on required business logic.
 
-### Using the starter project
+## Getting Started
 
-Try running the following commands:
-- dbt run
-- dbt test
+Once the Poetry environment has been set up, create a file in your `~/.dbt/` directory named `profiles.yml`.
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+Copy the contents of `profiles_template.yml` into `profiles.yml`. Here it is again for convenience:
+
+```yml
+nhl_mds_in_a_box_transform:
+  outputs:
+    dev:
+      type: duckdb
+      path: ../data/dev.duckdb
+      attach:
+        - path: ../data/sources.duckdb
+      threads: 1
+
+    prod:
+      type: duckdb
+      path: ../data/prod.duckdb
+      attach:
+        - path: ../data/sources.duckdb
+      threads: 4
+
+  target: dev
+```
+
+Then, with the working directory set to this current directory, run:
+
+```console
+poetry run dbt deps
+```
+
+ss
