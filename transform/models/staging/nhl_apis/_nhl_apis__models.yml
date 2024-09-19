@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: stg_nhl_stats_api__games
-    description: This model contains all game information for all NHL-sanctioned games.
+    description: This model contains information for all NHL-sanctioned games.
     columns:
       - name: id
         description: The primary key for this model. Uniquely identifies a game.
