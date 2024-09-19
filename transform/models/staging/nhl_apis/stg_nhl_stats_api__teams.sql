@@ -5,7 +5,7 @@ with
     renamed as (
         select
             id,
-            franchise_id
+            franchise_id,
             full_name,
             league_id,
             raw_tricode,

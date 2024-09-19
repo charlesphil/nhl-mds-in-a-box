@@ -1,11 +1,11 @@
 version: 2
 
 models:
-  - name: stg_nhl_api__games
-    description:
+  - name: stg_nhl_stats_api__games
+    description: This model contains all game information for all NHL-sanctioned games.
     columns:
       - name: id
-        description: The primary key for this table.
+        description: The primary key for this model. Uniquely identifies a game.
         data_tests:
           - unique
           - not_null
@@ -25,58 +25,404 @@ models:
               min_value: 1
       - name: game_schedule_state_id
         description: >
-          The scheduled state of the game:
-          1: Regular season game.
-          2: Postseason game.
-          5: Cancelled.
+          The schedule type of the game:
+          1: Required game.
+          2: Play game if needed.
+          5: Cancelled game.
         data_tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 5]
+              quote: false
+      - name: game_schedule_state
+        description: The descriptive value of game_schedule_state_id.
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ["required", "if needed", "cancelled"]
       - name: game_state_id
         description: >
           The state of the game:
+          1: Unplayed.
           4: Game ended in a tie.
+          6: Played (not a seasonal or playoff game)
+          7: Played (seasonal and playoff)
         data_tests:
+          - not_null
+          - accepted_values:
+              values: [1, 4, 6, 7]
+              quote: false
+      - name: game_state
+        description: The descriptive value of game_state_id.
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ["unplayed", "tied", "played"]
+      - name: game_type_id
+        description: >
+          The type of game being played:
+          1: NHL Preseason
+          2: NHL Regular Season
+          3: Stanley Cup
+          4: All-Star
+          6: World Cup of Hockey Group Stage
+          7: World Cup of Hockey Knockout Stage
+          8: World Cup of Hockey Pre-tournament
+          9: Winter Olympics
+          10: Young Stars
+          12: Women's All-Star
+          13: 2004-05 NHL Season (Lockout)
+          14: Canada Cup
+          18: Off-season Exhibition Tour
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 6, 7, 8, 9, 10, 12, 13, 14, 18]
+              quote: false
       - name: game_type
-        description:
+        description: The descriptive value of game_type_id.
         data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                [
+                  "preseason",
+                  "regular season",
+                  "stanley cup",
+                  "all-star",
+                  "world cup of hockey group stage",
+                  "world cup of hockey knockout stage",
+                  "world cup of hockey pre-tournament",
+                  "winter olympics",
+                  "young stars",
+                  "women all-star",
+                  "2004-05 nhl season",
+                  "canada cup",
+                  "off-season exhibition tour"
+                ]
       - name: home_score
-        description:
+        description: The home team's score.
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: home_team_id
-        description:
+        description: The home team's id.
         data_tests:
+          - not_null
       - name: period
-        description:
+        description: The number of periods played.
         data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 1
       - name: season
-        description:
+        description: The season the game was played in.
         data_tests:
+          - not_null
       - name: visiting_score
-        description:
+        description: The visiting team's score.
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: visiting_team_id
-        description:
+        description: The visiting team's id.
         data_tests:
+          - not_null
       - name: _dlt_load_time
-        description:
+        description: The local datetime of when the data was last loaded.
         data_tests:
+          - not_null
       - name: _dlt_id
-        description:
+        description: Unique identifier for the row provided by dlt.
         data_tests:
-  - name: stg_nhl_api__goalies
-    description:
-    columns:
-      - name:
-        description:
-        data_tests:
+          - not_null
+          - unique
 
-  - name: stg_nhl_api__skaters
-    description:
+  - name: stg_nhl_stats_api__goalies
+    description: This model contains aggregated statistics on all NHL goalies.
     columns:
-      - name:
-        description:
+      - name: assists
+        description: The number of assists made by the goalie.
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: games_played
+        description: The number of games played.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: games_started
+        description: The number of games started.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: full_name
+        description: The full name of the goalie.
+        data_tests:
+          - not_null
+      - name: goals
+        description: The number of goals made by the goalie.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: goals_against
+        description: The number of goals made against the goalie.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: goals_against_average
+        description: The number of goals allowed by a goalie per 60 minutes of playing time.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: last_name
+        description: The goalie's last name.
+        data_tests:
+          - not_null
+      - name: losses
+        description: The number of non-overtime losses experienced by the goalie.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: ot_losses
+        description: The number of overtime losses experienced by the goalie.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: penalty_minutes
+        description: The number of penalty minutes given to the goalie.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: player_id
+        description: The primary key for this model. Uniquely identifies a goalie.
+        data_tests:
+          - not_null
+          - unique
+      - name: points
+        description: The number of score-contributing points earned by the goalie.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: save_pct
+        description: The percentage of saves made out of shots against the goalie.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: saves
+        description: The number of saves made by the goalie.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: shoots_catches
+        description: The handedness of the goalie.
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ["L", "R"]
+      - name: shots_against
+        description: The number of shots made against the goalie.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: shutouts
+        description: The number of shutouts made by the goalie (opposing team scored nothing).
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: ties
+        description: The number of ties experienced by the goalie.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: time_on_ice
+        description: The number of seconds played by the goalie.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: wins
+        description: The number of wins experienced by the goalie.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: _dlt_load_time
+        description: The local datetime of when the data was last loaded.
+        data_tests:
+          - not_null
+      - name: _dlt_id
+        description: Unique identifier for the row provided by dlt.
+        data_tests:
+          - not_null
+          - unique
 
-  - name: stg_nhl_api__teams
+  - name: stg_nhl_stats_api__skaters
+    description: This model contains aggregated statistics on all non-goalie NHL players.
+    columns:
+      - name: assists
+        description: The number of assists made by the skater.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: ev_goals
+        description: The number of goals made by the skater while both teams were at even strength.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: ev_points
+        description: >
+          The number of score-contributing points earned by the skater
+          while both teams were at even strength.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: faceoff_win_pct
+        description: The percentage of faceoffs won by the skater.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: game_winning_goals
+        description: >
+          The number of game-winning goals made by the skater
+          (winning team wins by one goal).
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: games_played
+        description: The number of games played.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: goals
+        description: The number of goals made by the skater.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: last_name
+        description: The skater's last name.
+        data_tests:
+          - not_null
+      - name: ot_goals
+        description: The number of goals made in overtime.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: penalty_minutes
+        description: The number of penalty minutes given to the skater.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: player_id
+        description: The primary key for this model. Uniquely identifies a skater.
+        data_tests:
+          - not_null
+          - unique
+      - name: plus_minus
+        description: >
+          The skater's +/- rating. A plus is given when the skater's team scores
+          an even-strength or shorthanded goal, and a minus is given when
+          opponents score in those situations. The difference is this value.
+      - name: points
+        description: The number of score-contributing points earned by the skater.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: points_per_game
+        description: The number of score-contributing points earned by the skater per game played.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: position_code
+        description: The skater's (non-goalie) position code.
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ["C", "D", "R", "L"]
+      - name: position
+        description: The descriptive value of position_code.
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ["center", "defense", "right wing", "left wing"]
+      - name: pp_goals
+        description: The number of goals made by the skater during power plays.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: pp_points
+        description: The number of score-contributing points earned by the skater during power plays.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: sh_goals
+        description: The number of goals made by the skater while their team was shorthanded.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: sh_points
+        description: >
+          The number of score-contributing points earned by the skater while
+          their team was shorthanded.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: shooting_pct
+        description: >
+          The shooting percentage of the skater. This is calculated by dividing
+          the number of goals made by the number of on-goal shots.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: shoots_catches
+        description: The handedness of the skater.
+        data_tests:
+          - accepted_values:
+              values: ["L", "R"]
+      - name: shots
+        description: The number of shots on goal made by the skater.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: full_name
+        description: The full name of the skater.
+        data_tests:
+          - not_null
+      - name: time_on_ice_per_game
+        description: The number of seconds played by the skater per game played.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: _dlt_load_time
+        description: The local datetime of when the data was last loaded.
+        data_tests:
+          - not_null
+      - name: _dlt_id
+        description: Unique identifier for the row provided by dlt.
+        data_tests:
+          - not_null
+          - unique
+
+  - name: stg_nhl_stats_api__teams
     description: This model pulls in NHL teams data from the NHL source.
     columns:
       - name: id
@@ -117,10 +463,10 @@ models:
           - unique
           - not_null
       - name: _dlt_load_time
-        description: The time dlt loaded the data in local time (EST).
+        description: The local datetime of when the data was last loaded.
         data_tests:
           - not_null
       - name: _dlt_id
-        description: The unique identifier assigned by dlt upon load.
+        description: Unique identifier for the row provided by dlt.
         data_tests:
           - not_null
