@@ -1,6 +1,6 @@
 with
 
-    source as (select * from {{ source('nhl_stats_api', 'team_season_stats') }}),
+    source as (select * from {{ source('nhl_stats_api', 'team_season') }}),
 
     renamed as (
         select

@@ -60,7 +60,7 @@ def nhl_stats_api() -> Generator:
                 },
             },
             {
-                "name": "team_season_stats",
+                "name": "team_season",
                 "primary_key": ["teamId", "seasonId"],
                 "endpoint": {
                     "path": "team/summary",

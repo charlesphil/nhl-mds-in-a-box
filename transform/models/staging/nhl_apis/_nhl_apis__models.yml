@@ -34,12 +34,24 @@ models:
         description: The player's height in imperial formatting.
       - name: height_in_inches
         description: The player's height in inches.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: height_in_centimeters
         description: The player's height in centimeters.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: weight_in_pounds
         description: The player's weight in pounds.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: weight_in_kilograms
         description: The player's weight in kilograms.
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: birth_city
         description: The player's birth city.
       - name: birth_state_province
@@ -58,16 +70,35 @@ models:
       - name: last_season_id
         description: The ID of the last season the player played in.
       - name: sweater_number
-        description: The player's sweater number.
+        description: The player's last worn sweater number.
         data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 99
       - name: last_team_id
         description: The ID of the last team the player played with.
+        data_tests:
+          - relationships:
+              to: ref('stg_nhl_stats_api__teams')
+              field: id
       - name: last_team_abbrev
         description: The tricode abbreviation of the last team the player played with.
+        data_tests:
+          - relationships:
+              to: ref('stg_nhl_stats_api__teams')
+              field: tricode
       - name: team_id
         description: The ID of the player's current team, if applicable.
+        data_tests:
+          - relationships:
+              to: ref('stg_nhl_stats_api__teams')
+              field: id
       - name: team_abbrev
         description: The tricode abbreviation of the player's current team, if applicable.
+        data_tests:
+          - relationships:
+              to: ref('stg_nhl_stats_api__teams')
+              field: tricode
 
   - name: stg_nhl_stats_api__games
     description: This model contains information for all NHL-sanctioned games.
@@ -287,6 +318,7 @@ models:
         data_tests:
           - dbt_utils.accepted_range:
               min_value: 0
+              max_value: 1
       - name: saves
         description: The number of saves made by the goalie.
         data_tests:
@@ -362,6 +394,7 @@ models:
         data_tests:
           - dbt_utils.accepted_range:
               min_value: 0
+              max_value: 1
       - name: game_winning_goals
         description: >
           The number of game-winning goals made by the skater
@@ -461,6 +494,7 @@ models:
         data_tests:
           - dbt_utils.accepted_range:
               min_value: 0
+              max_value: 1
       - name: shoots_catches
         description: The handedness of the skater.
         data_tests:
@@ -490,7 +524,7 @@ models:
           - not_null
           - unique
 
-  - name: stg_nhl_stats_api__team_season_stats
+  - name: stg_nhl_stats_api__team_season
     description: This model pulls in NHL team stats per season from the NHL source.
     data_tests:
       - dbt_utils.unique_combination_of_columns:
@@ -499,73 +533,146 @@ models:
             - season_id
     columns:
       - name: games_played
-        description:
+        description: The number of games played by the team in the season.
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: goals_against
-        description:
+        description: The number of goals made against the team in the season.
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: goals_against_per_game
-        description:
+        description: The average number of goals made against the team per game in the season.
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: goals_for
-        description:
+        description: The number of goals made by the team in the season.
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: goals_for_per_game
-        description:
+        description: The average number of goals made by the team per game in the season.
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: losses
-        description:
+        description: The number of losses (including overtime losses) experienced by the team in the season.
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: penalty_kill_net_pct
-        description:
+        description: >
+          The number of shorthanded situations minus unanswered (no shorthanded
+          goal made in return) power goals divided by shorthanded situations.
         data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1
       - name: penalty_kill_pct
-        description:
+        description: >
+          The number of shorthanded situations minus power goals allowed divided
+          by shorthanded situations.
         data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1
       - name: point_pct
-        description:
+        description: >
+          The points percentage of the team in the season. Calculated as the
+          ratio of points earned by all possible points from games played
+          (points/(number of games * 2)).
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1
       - name: points
-        description:
+        description: >
+          The total number of points earned by the team in the season.
+          Team points are calculated per game:
+          Win: 2 points
+          Tie: 1 point
+          Loss: 0 points
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: power_play_net_pct
-        description:
+        description: >
+          The number of power goals minus shorthanded goals against divided
+          by the power play opportunities.
         data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1
       - name: power_play_pct
-        description:
+        description: The number of power goals divided by the power play opportunities.
         data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1
       - name: regulation_and_ot_wins
-        description:
+        description: The total number of regulation and overtime wins for the team in the season.
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: season_id
-        description:
+        description: The ID of the season.
         data_tests:
           - not_null
       - name: shots_against_per_game
-        description:
+        description: The number of on-goal shots taken against the team per game in the season.
         data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: shots_for_per_game
-        description:
+        description: The number of on-goal shots taken by the team per game in the season.
         data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: team_full_name
-        description:
-        data_tests:
-      - name: team_id
-        description:
+        description: The full name of the team.
         data_tests:
           - not_null
+      - name: team_id
+        description: The ID of the team.
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_nhl_stats_api__teams')
+              field: id
       - name: ties
-        description:
+        description: The number of ties experienced by the team in the season.
         data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: wins
-        description:
+        description: The number of wins experienced by the team in the season and postseason.
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: wins_in_regulation
-        description:
+        description: The number of wins accomplished at regulation time by the team in the season.
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: wins_in_shootout
-        description:
+        description: The number of wins accomplished by shootout.
         data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
       - name: _dlt_load_time
         description: The local datetime of when the data was last loaded.
         data_tests:
@@ -576,11 +683,16 @@ models:
           - not_null
           - unique
       - name: faceoff_win_pct
-        description:
+        description: The percentage of faceoffs won by the team in the season.
         data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1
       - name: ot_losses
-        description:
+        description: The number of losses that occurred in overtime for the team in the season.
         data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
 
   - name: stg_nhl_stats_api__teams
     description: This model pulls in NHL team information from the NHL source.

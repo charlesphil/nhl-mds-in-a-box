@@ -1,0 +1,7 @@
+version: 2
+
+seeds:
+  - name: seed_player_ids
+    description: Contains a list of all NHL player IDs.
+  - name: seed_seasons
+    description: Contains a list of all NHL seasons.

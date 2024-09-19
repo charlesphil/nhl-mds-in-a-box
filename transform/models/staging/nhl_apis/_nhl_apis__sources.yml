@@ -9,7 +9,7 @@ sources:
       - name: games
       - name: skaters
       - name: goalies
-      - name: team_season_stats
+      - name: team_season
 
   - name: nhl_search_api
     database: sources

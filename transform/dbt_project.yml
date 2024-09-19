@@ -24,6 +24,11 @@ clean-targets: # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
+seeds:
+  nhl_mds_in_a_box_transform:
+    +quote_columns: false
+    +schema: reference
+
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 models:
@@ -35,5 +40,5 @@ models:
       +schema: intermediate
       +materialized: view
     marts:
-      +schema: marts
+      +schema: mart
       +materialized: table
