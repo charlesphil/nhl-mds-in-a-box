@@ -1,6 +1,81 @@
 version: 2
 
 models:
+  - name: stg_nhl_api__games
+    description:
+    columns:
+      - name: id
+        description: The primary key for this table.
+        data_tests:
+          - unique
+          - not_null
+      - name: eastern_start_time
+        description: The start time of the game (EST).
+        data_tests:
+          - not_null
+      - name: game_date
+        description: The date of when the game was played.
+        data_tests:
+          - not_null
+      - name: game_number
+        description: The ordinal number of the game within a season.
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+      - name: game_schedule_state_id
+        description: >
+          The scheduled state of the game:
+          1: Regular season game.
+          2: Postseason game.
+          5: Cancelled.
+        data_tests:
+      - name: game_state_id
+        description: >
+          The state of the game:
+          4: Game ended in a tie.
+        data_tests:
+      - name: game_type
+        description:
+        data_tests:
+      - name: home_score
+        description:
+        data_tests:
+      - name: home_team_id
+        description:
+        data_tests:
+      - name: period
+        description:
+        data_tests:
+      - name: season
+        description:
+        data_tests:
+      - name: visiting_score
+        description:
+        data_tests:
+      - name: visiting_team_id
+        description:
+        data_tests:
+      - name: _dlt_load_time
+        description:
+        data_tests:
+      - name: _dlt_id
+        description:
+        data_tests:
+  - name: stg_nhl_api__goalies
+    description:
+    columns:
+      - name:
+        description:
+        data_tests:
+
+  - name: stg_nhl_api__skaters
+    description:
+    columns:
+      - name:
+        description:
+        data_tests:
+
   - name: stg_nhl_api__teams
     description: This model pulls in NHL teams data from the NHL source.
     columns:
