@@ -16,6 +16,9 @@ This schema contains data pulled from endpoints at two NHL-owned APIs. See [this
 
 Tables:
 
+- `games`
+- `goalies`
+- `skaters`
 - `teams`
 
 ### dev.duckdb
