@@ -10,9 +10,9 @@ Three DuckDB databases are expected in this directory once extractions and trans
 
 Contains all raw data obtained from various sources. Each source is represented by a schema within this database.
 
-#### `nhl_api`
+#### `nhl_stats_api`
 
-This schema contains data pulled from endpoints at two NHL-owned APIs. See [this README by Zmalski](https://github.com/Zmalski/NHL-API-Reference/blob/main/README.md) for an unofficial documentation of these APIs.
+This schema contains data pulled from the NHL Stats API. See [this README by Zmalski](https://github.com/Zmalski/NHL-API-Reference?tab=readme-ov-file#nhl-stats-api-documentation) for an unofficial documentation of this API.
 
 Tables:
 
@@ -20,6 +20,15 @@ Tables:
 - `goalies`
 - `skaters`
 - `teams`
+- `team_season_stats`
+
+#### `nhl_search_api`
+
+This schema contains data pulled from an API the NHL uses to power search results on their website. Only seems to be used on the [Players](https://www.nhl.com/player) page at the moment.
+
+Tables:
+
+- `players`
 
 ### dev.duckdb
 

@@ -1,6 +1,74 @@
 version: 2
 
 models:
+  - name: stg_nhl_search_api__players
+    description: This model contains information on all NHL players.
+    columns:
+      - name: player_id
+        description: The primary key for this model. Uniquely identifies a player.
+        data_tests:
+          - not_null
+          - unique
+      - name: full_name
+        description: The full name of the player.
+        data_tests:
+          - not_null
+      - name: position_code
+        description: The player's position code.
+        data_tests:
+          - accepted_values:
+              values: ["C", "D", "R", "L", "G"]
+      - name: position
+        description: The descriptive value of position_code.
+        data_tests:
+          - accepted_values:
+              values: ["center", "defense", "right wing", "left wing", "goalie"]
+      - name: active
+        description: A boolean that flags whether a player is actively playing or not.
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+              quote: false
+      - name: height
+        description: The player's height in imperial formatting.
+      - name: height_in_inches
+        description: The player's height in inches.
+      - name: height_in_centimeters
+        description: The player's height in centimeters.
+      - name: weight_in_pounds
+        description: The player's weight in pounds.
+      - name: weight_in_kilograms
+        description: The player's weight in kilograms.
+      - name: birth_city
+        description: The player's birth city.
+      - name: birth_state_province
+        description: The player's birth state or province. Only applicable to the U.S. and Canada.
+      - name: birth_country
+        description: The tricode abbreviation of the player's birth country.
+      - name: _dlt_load_time
+        description: The local datetime of when the data was last loaded.
+        data_tests:
+          - not_null
+      - name: _dlt_id
+        description: Unique identifier for the row provided by dlt.
+        data_tests:
+          - not_null
+          - unique
+      - name: last_season_id
+        description: The ID of the last season the player played in.
+      - name: sweater_number
+        description: The player's sweater number.
+        data_tests:
+      - name: last_team_id
+        description: The ID of the last team the player played with.
+      - name: last_team_abbrev
+        description: The tricode abbreviation of the last team the player played with.
+      - name: team_id
+        description: The ID of the player's current team, if applicable.
+      - name: team_abbrev
+        description: The tricode abbreviation of the player's current team, if applicable.
+
   - name: stg_nhl_stats_api__games
     description: This model contains information for all NHL-sanctioned games.
     columns:
@@ -422,8 +490,100 @@ models:
           - not_null
           - unique
 
+  - name: stg_nhl_stats_api__team_season_stats
+    description: This model pulls in NHL team stats per season from the NHL source.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - team_id
+            - season_id
+    columns:
+      - name: games_played
+        description:
+        data_tests:
+      - name: goals_against
+        description:
+        data_tests:
+      - name: goals_against_per_game
+        description:
+        data_tests:
+      - name: goals_for
+        description:
+        data_tests:
+      - name: goals_for_per_game
+        description:
+        data_tests:
+      - name: losses
+        description:
+        data_tests:
+      - name: penalty_kill_net_pct
+        description:
+        data_tests:
+      - name: penalty_kill_pct
+        description:
+        data_tests:
+      - name: point_pct
+        description:
+        data_tests:
+      - name: points
+        description:
+        data_tests:
+      - name: power_play_net_pct
+        description:
+        data_tests:
+      - name: power_play_pct
+        description:
+        data_tests:
+      - name: regulation_and_ot_wins
+        description:
+        data_tests:
+      - name: season_id
+        description:
+        data_tests:
+          - not_null
+      - name: shots_against_per_game
+        description:
+        data_tests:
+      - name: shots_for_per_game
+        description:
+        data_tests:
+      - name: team_full_name
+        description:
+        data_tests:
+      - name: team_id
+        description:
+        data_tests:
+          - not_null
+      - name: ties
+        description:
+        data_tests:
+      - name: wins
+        description:
+        data_tests:
+      - name: wins_in_regulation
+        description:
+        data_tests:
+      - name: wins_in_shootout
+        description:
+        data_tests:
+      - name: _dlt_load_time
+        description: The local datetime of when the data was last loaded.
+        data_tests:
+          - not_null
+      - name: _dlt_id
+        description: Unique identifier for the row provided by dlt.
+        data_tests:
+          - not_null
+          - unique
+      - name: faceoff_win_pct
+        description:
+        data_tests:
+      - name: ot_losses
+        description:
+        data_tests:
+
   - name: stg_nhl_stats_api__teams
-    description: This model pulls in NHL teams data from the NHL source.
+    description: This model pulls in NHL team information from the NHL source.
     columns:
       - name: id
         description: >
