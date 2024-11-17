@@ -53,7 +53,7 @@ The dbt databases are as follows (applies to both development and production ver
   - Contains the dbt models that will be exposed to end-users.
   - These tables should come from dbt models that are result of all other transformations done and loaded in the other two databases.
   - Each schema in this database also refers to the purpose the tables will be used toward. In a business use case, this will most likely be the stakeholder requesting the data.
-  - All tables in this database will either be materialized from dbt models as tables or incremental tables. This will enable faster query times as tables contain the actual data that the SQL engine can query through. If these tables were instead materialized as views, this would require *all* parent transformations to be rerun. As tables, we can directly store the result of all upstream queries. The downside is that we will not obtain any fresh data in a mart table until all upstream models have been run.
+  - All tables in this database will either be materialized from dbt models as tables or incremental tables. This will enable faster query times as tables contain the actual data that the SQL engine can query through. If these tables were instead materialized as views, this would require *all* parent transformations to be rerun every time we want to query through a table. As tables, we can directly store the result of all upstream queries. The downside is that we will not obtain any fresh data in a mart table until all upstream models have been run.
 
 #### Development
 
