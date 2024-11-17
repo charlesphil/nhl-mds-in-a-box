@@ -27,6 +27,7 @@ clean-targets: # directories to be removed by `dbt clean`
 seeds:
   nhl_mds_in_a_box_transform:
     +quote_columns: false
+    +database: staging
     +schema: reference
 
 # Configuring models
@@ -34,11 +35,11 @@ seeds:
 models:
   nhl_mds_in_a_box_transform:
     staging:
-      +schema: staging
+      +database: staging
       +materialized: view
     intermediate:
-      +schema: intermediate
+      +database: intermediate
       +materialized: view
     marts:
-      +schema: mart
+      +database: marts
       +materialized: table

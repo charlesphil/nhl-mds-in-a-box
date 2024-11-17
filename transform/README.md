@@ -10,22 +10,24 @@ Copy the contents of `profiles_template.yml` into `profiles.yml`. Here it is aga
 
 ```yml
 nhl_mds_in_a_box_transform:
+  target: dev
   outputs:
     dev:
       type: duckdb
-      path: ../data/dev.duckdb
+      path: ../data/dev/staging.duckdb
       attach:
         - path: ../data/sources.duckdb
+        - path: ../data/dev/intermediate.duckdb
+        - path: ../data/dev/mart.duckdb
       threads: 1
-
     prod:
       type: duckdb
-      path: ../data/prod.duckdb
+      path: ../data/prod/staging.duckdb
       attach:
         - path: ../data/sources.duckdb
+        - path: ../data/prod/intermediate.duckdb
+        - path: ../data/prod/mart.duckdb
       threads: 4
-
-  target: dev
 ```
 
 Then, with the working directory set to this current directory, run:
@@ -33,5 +35,3 @@ Then, with the working directory set to this current directory, run:
 ```console
 poetry run dbt deps
 ```
-
-ss

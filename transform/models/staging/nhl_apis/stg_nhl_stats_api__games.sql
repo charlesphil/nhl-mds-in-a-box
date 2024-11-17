@@ -12,11 +12,13 @@ with
             case
                 when game_schedule_state_id = 1 then 'required'
                 when game_schedule_state_id = 2 then 'if needed'
+                when game_schedule_state_id = 3 then 'postponed'
                 when game_schedule_state_id = 5 then 'cancelled'
             end as game_schedule_state,
             game_state_id,
             case
                 when game_state_id = 1 then 'unplayed'
+                when game_state_id = 3 then 'in progress'
                 when game_state_id = 4 then 'tied'
                 when game_state_id = 6 or game_state_id = 7 then 'played'
             end as game_state,
@@ -35,6 +37,7 @@ with
                 when game_type_id = 13 then '2004-05 nhl season'
                 when game_type_id = 14 then 'canada cup'
                 when game_type_id = 18 then 'off-season exhibition tour'
+                when game_type_id = 19 then '2025 nhl 4 nations face-off'
             end as game_type,
             home_score,
             home_team_id,
