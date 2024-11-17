@@ -4,6 +4,8 @@ This project contains the Python scripts used to extract data from various NHL s
 
 I [migrated to dlt](https://dlthub.com/) to power the extraction once the folks at dltHub released version 1.0.0. Since I exclusively used (semi) public REST APIs from the NHL, `dlt` seemed like a good drop-in replacement to my previous extraction scripts as it appears to be extremely robust in pulling data from REST APIs. For details on how I ran the extraction prior to migrating to `dlt`, [see the Legacy section below](#legacy).
 
+See [this README by Zmalski](https://github.com/Zmalski/NHL-API-Reference?tab=readme-ov-file#nhl-stats-api-documentation) for an unofficial documentation of the NHL Stats API.
+
 ## dlt Pipeline
 
 I modeled the script after the [example found in the dlt docs for REST APIs](https://dlthub.com/docs/dlt-ecosystem/verified-sources/rest_api/basic). There are two main parts to each REST API source: the definition and the pipeline.
