@@ -8,6 +8,10 @@
 data/*.duckdb
 data/*.wal
 data/duckdb
+data/dev/*.duckdb
+data/dev/*.wal
+data/prod/*.duckdb
+data/prod/*.wal
 
 # dbt
 transform/target/
