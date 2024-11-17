@@ -4,7 +4,6 @@ import logging
 from typing import Generator
 
 import dlt
-from dlt.sources.helpers import requests
 from dlt.sources.rest_api import (
     RESTAPIConfig,  # type: ignore[reportPrivateImportUsage]
     rest_api_resources,
@@ -14,7 +13,7 @@ logger = logging.getLogger("dlt")
 
 
 def main() -> None:
-    """."""
+    """Run all pipelines to extract and load data from NHL REST APIs."""
     logger.info("Starting nhl_api pipeline.")
     load_nhl_stats_api()
     load_nhl_search_api()
@@ -23,7 +22,12 @@ def main() -> None:
 
 @dlt.source
 def nhl_stats_api() -> Generator:
-    """."""
+    """Define NHL Stats endpoints and set parameters for use in the pipeline.
+
+    Yields:
+        Generator: Iterates through endpoints when called by pipeline.run().
+
+    """
     config: RESTAPIConfig = {
         "client": {"base_url": "https://api.nhle.com/stats/rest/en/"},
         "resource_defaults": {
@@ -77,7 +81,7 @@ def nhl_stats_api() -> Generator:
 
 
 def load_nhl_stats_api() -> None:
-    """."""
+    """Load extracted data from the NHL Stats API."""
     pipeline = dlt.pipeline(
         pipeline_name="nhl_apis",
         destination=dlt.destinations.duckdb("../data/sources.duckdb"),
@@ -90,7 +94,12 @@ def load_nhl_stats_api() -> None:
 
 @dlt.source
 def nhl_search_api() -> Generator:
-    """."""
+    """Define NHL Search endpoints and set parameters for use in the pipeline.
+
+    Yields:
+        Generator: Iterates through endpoints when called by pipeline.run().
+
+    """
     config: RESTAPIConfig = {
         "client": {"base_url": "https://search.d3.nhle.com/api/v1/search/"},
         "resource_defaults": {
@@ -116,7 +125,7 @@ def nhl_search_api() -> Generator:
 
 
 def load_nhl_search_api() -> None:
-    """."""
+    """Load extracted data from the NHL Search API."""
     pipeline = dlt.pipeline(
         pipeline_name="nhl_apis",
         destination=dlt.destinations.duckdb("../data/sources.duckdb"),
