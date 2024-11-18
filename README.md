@@ -32,7 +32,7 @@ All data that get outputted by all other projects in this repository will land i
 
 dbt gives data practitioners the ability to do many things that was previously unavailable. For starters, it enables a git workflow for data development work, meaning that we can actually track and make changes to queries against our data warehouses. No more mystery data with vague origins.
 
-The second thing that dbt provides is the ability to track the lineage of our data. In other words, we can see how our data is flowing from one table to another, or see which table depend on another table. This is represented by a directed acyclic graph (DAG) which dbt also generates for us.
+The second thing that dbt provides is the ability to track the lineage of our data. In other words, we can see how our data is flowing from one table to another, or see which table depend on another table. This is represented by a [directed acyclic graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) which dbt also generates for us.
 
 dbt models are written in SQL, templated by [Jinja](https://jinja.palletsprojects.com/en/stable/). Because of this, dbt must be installed in a Python environment. However, this also means that we'll have great synergy with the rest of the repository as the entire stack will be requiring Python anyway.
 

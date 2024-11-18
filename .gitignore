@@ -20,3 +20,8 @@ transform/logs/
 
 # dlt
 extract/.dlt/secrets.toml
+
+# airflow
+orchestration/logs/
+orchestration/standalone_admin_password.txt
+orchestration/airflow-webserver.pid
