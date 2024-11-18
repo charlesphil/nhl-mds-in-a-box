@@ -6,6 +6,10 @@ I [migrated to dlt](https://dlthub.com/) to power the extraction once the folks 
 
 See [this README by Zmalski](https://github.com/Zmalski/NHL-API-Reference?tab=readme-ov-file#nhl-stats-api-documentation) for an unofficial documentation of the NHL Stats API.
 
+## How This Project Interacts With the Rest of the Repository
+
+The script can be manually run via `poetry run python nhl_apis.py`, and should be run this way if this project is not being interfaced with Airflow. However, the preferred way to run the data extraction is through scheduled Airflow tasks.
+
 ## dlt Pipeline
 
 I modeled the script after the [example found in the dlt docs for REST APIs](https://dlthub.com/docs/dlt-ecosystem/verified-sources/rest_api/basic). There are two main parts to each REST API source: the definition and the pipeline.
