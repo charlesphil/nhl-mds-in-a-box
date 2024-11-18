@@ -30,10 +30,10 @@ def main() -> None:
 
     """
     # duckdb housekeeping
-    con = duckdb.connect("../data/sources.duckdb")
+    con = duckdb.connect("sources.duckdb")
     con.execute("create schema if not exists nhl_api")
     con.execute("use nhl_api")
-    logger.info("Initialized duckdb connection.")
+    logger.info("Initialized DuckDB connection.")
 
     session = requests.Session()
     logger.info("Initialized session.")
@@ -56,7 +56,7 @@ def teams(
 
     Args:
         session (requests.Session): A session object.
-        con (duckdb.DuckDBPyConnection): A connection to the duckdb database.
+        con (duckdb.DuckDBPyConnection): A connection to the DuckDB database.
 
     """
     logger.info("Retrieving teams data...")

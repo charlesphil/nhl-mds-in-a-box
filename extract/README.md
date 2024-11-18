@@ -36,3 +36,12 @@ Because we are dealing with DuckDB databases, the *default* value for DuckDB wil
 Since we are trying to point to a custom path (`../data/`), this requires importing the dlt duckdb module. Only then can the path be customized.
 
 ## Legacy
+
+The `do_not_use_nhl_api.py` script used to pull teams data from the same APIs as the ones found in the `dlt` script.
+The way this was achieved was by sending requests to the endpoints and storing the results in dataframes.
+
+DuckDB provides a Python API and is used in the script to initialize and form a connection to an in-memory database that writes to disk. This script was also my attempt at implementing a custom logger and to handle various edge-case failures.
+
+Since `dlt` handles all of the same work in a robust and well-tested package, there was no need to continue on reinventing the wheel and spending effort on something the open-source community has already provided.
+
+The script remains in the repo as an example of a minimalist version of what `dlt` does behind the scenes. Feel free to run the script manually to look at the DuckDB database (which will be created in the same directory as the script), but this script will never be run by the data orchestration tool and will remain as a proof of concept for REST API data ingestion.
