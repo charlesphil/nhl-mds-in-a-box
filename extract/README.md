@@ -35,6 +35,16 @@ We can think of `destination` as the database and `dataset_name` as the schema i
 Because we are dealing with DuckDB databases, the *default* value for DuckDB will only create the database in the same directory as the script.
 Since we are trying to point to a custom path (`../data/`), this requires importing the dlt duckdb module. Only then can the path be customized.
 
+## Configuring `dlt`
+
+`dlt` reads from `config.toml` which can be found in the `.dlt/` directory. This configuration file is intended to be used by pipelines to access common, non-sensitive settings such as paths, hosts, URLs, and so on. The only two settings in this file so far are `dlthub_telemetry` and `log_level`.
+
+`dlthub_telemetry` [phones home to dltHub](https://dlthub.com/docs/reference/telemetry#what-we-send-when) and provides various runtime metrics and system information. This setting is unfortunately **opt-out** instead of opt-in, so it is set to false here.
+
+`log_level` sets the level in which to output logging information to the console. This has been set to "INFO" to track all pipeline actions.
+
+In the event that credentials or other sensitive information is required when running a pipeline, create a `secrets.toml` file in the `.dlt/` directory. This file should *not* be committed to the repo and is already included in the root level gitignore. [See the documentation](https://dlthub.com/docs/general-usage/credentials/setup#secretstoml-and-configtoml) for more information on configuring secrets.
+
 ## Legacy
 
 The `do_not_use_nhl_api.py` script used to pull teams data from the same APIs as the ones found in the `dlt` script.
