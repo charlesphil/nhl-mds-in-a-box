@@ -1,6 +1,6 @@
 # NHL MDS in a Box
 
-This repository is a monorepo of multiple projects that mimic the processes involved in the so-called modern data stack (MDS). This repo will follow the data integration paradigm of Extract, Load, Transform (ELT).
+This repository is a [monorepo](https://en.wikipedia.org/wiki/Monorepo) of multiple projects that mimic the processes involved in the so-called modern data stack (MDS). This repo will follow the data integration paradigm of Extract, Load, Transform (ELT).
 
 Four projects and one database represent the stack in its entirety, and can be seen in the image below:
 
